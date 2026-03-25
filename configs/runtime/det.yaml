@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - default
+  - _self_
+
+trainer:
+  default_root_dir: outputs/convfuser
+
+checkpoint:
+  dirpath: outputs/convfuser/checkpoints
+
+logger:
+  name: convfuser

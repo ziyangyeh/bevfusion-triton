@@ -1,0 +1,13 @@
+# @package _global_
+defaults:
+  - default
+  - _self_
+
+trainer:
+  default_root_dir: outputs/fusion-bev256d2-lss
+
+checkpoint:
+  dirpath: outputs/fusion-bev256d2-lss/checkpoints
+
+logger:
+  name: fusion-bev256d2-lss

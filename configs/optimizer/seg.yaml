@@ -1,0 +1,19 @@
+# @package _global_
+defaults:
+  - default
+  - _self_
+
+optimizer:
+  lr: 1.0e-4
+  paramwise_cfg:
+    custom_keys:
+      absolute_pos_embed:
+        decay_mult: 0
+      relative_position_bias_table:
+        decay_mult: 0
+
+lr_config:
+  policy: cyclic
+
+momentum_config:
+  policy: cyclic

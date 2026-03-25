@@ -1,0 +1,44 @@
+# @package _global_
+defaults:
+  - common
+  - _self_
+
+input_modality:
+  use_lidar: true
+  use_camera: true
+  use_radar: false
+  use_map: false
+  use_external: false
+
+data:
+  train:
+    type: NuScenesDataset
+    dataset_root: ${dataset_root}
+    ann_file: ${dataset_root}/nuscenes_infos_train.pkl
+    pipeline: ${train_pipeline}
+    object_classes: ${object_classes}
+    map_classes: ${map_classes}
+    modality: ${input_modality}
+    test_mode: false
+    use_valid_flag: true
+    box_type_3d: LiDAR
+  val:
+    type: NuScenesDataset
+    dataset_root: ${dataset_root}
+    ann_file: ${dataset_root}/nuscenes_infos_val.pkl
+    pipeline: ${test_pipeline}
+    object_classes: ${object_classes}
+    map_classes: ${map_classes}
+    modality: ${input_modality}
+    test_mode: false
+    box_type_3d: LiDAR
+  test:
+    type: NuScenesDataset
+    dataset_root: ${dataset_root}
+    ann_file: ${dataset_root}/nuscenes_infos_val.pkl
+    pipeline: ${test_pipeline}
+    object_classes: ${object_classes}
+    map_classes: ${map_classes}
+    modality: ${input_modality}
+    test_mode: true
+    box_type_3d: LiDAR

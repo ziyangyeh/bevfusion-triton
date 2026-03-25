@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - _self_
+
+model:
+  fuser:
+    in_channels: [80, 256]
+    out_channels: 256

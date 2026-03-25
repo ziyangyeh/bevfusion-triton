@@ -1,0 +1,40 @@
+# @package _global_
+defaults:
+  - _self_
+
+seed: 42
+max_epochs: 20
+
+load_from: null
+model_pretrained: null
+
+trainer:
+  accelerator: auto
+  devices: 1
+  strategy: auto
+  precision: 32-true
+  max_epochs: ${max_epochs}
+  default_root_dir: outputs/default
+  log_every_n_steps: 10
+
+checkpoint:
+  dirpath: outputs/default/checkpoints
+  filename: epoch={epoch}-step={step}
+  monitor: val/loss
+  mode: min
+  save_top_k: 1
+  save_last: true
+
+logger:
+  save_dir: outputs
+  name: default
+
+visualization_runtime:
+  enabled: false
+  output_dir: outputs/streamlit_runtime
+  enable_train: false
+  enable_val: true
+  enable_test: true
+  save_results: true
+  max_samples_per_stage: 1
+  every_n_epochs: 1

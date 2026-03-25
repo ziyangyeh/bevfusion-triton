@@ -1,0 +1,36 @@
+# @package _global_
+defaults:
+  - /dataset/nuscenes: seg
+  - /dataset/nuscenes/pipeline: seg
+  - /dataset/nuscenes/dataloader: seg
+  - /runtime: seg
+  - /optimizer: seg
+  - /model/core: bevfusion
+  - /model/encoder/camera/backbone: swin_tiny
+  - /model/encoder/camera/neck: generalized_lss_fpn
+  - /model/encoder/camera/vtransform: depth_lss
+  - /model/encoder/lidar/voxelize: default
+  - /model/encoder/lidar/backbone: sparse_encoder
+  - /model/fuser/conv: default
+  - /model/decoder/backbone: second
+  - /model/decoder/neck: second_fpn
+  - /model/head/seg: bev_map
+  - _self_
+
+load_from: pretrained/bevfusion-seg.pth
+point_cloud_range: [-51.2, -51.2, -5.0, 51.2, 51.2, 3.0]
+voxel_size: [0.1, 0.1, 0.2]
+
+model:
+  encoders:
+    camera:
+      backbone:
+        drop_path_rate: 0.3
+      vtransform:
+        xbound: [-51.2, 51.2, 0.4]
+        ybound: [-51.2, 51.2, 0.4]
+    lidar:
+      voxelize:
+        max_voxels: [90000, 120000]
+      backbone:
+        sparse_shape: [1024, 1024, 41]

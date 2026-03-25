@@ -1,0 +1,21 @@
+# @package _global_
+defaults:
+  - _self_
+
+model:
+  encoders:
+    camera:
+      neck:
+        in_channels: [192, 384, 768]
+        out_channels: 256
+        start_level: 0
+        num_outs: 3
+        norm_cfg:
+          type: BN2d
+          requires_grad: true
+        act_cfg:
+          type: ReLU
+          inplace: true
+        upsample_cfg:
+          mode: bilinear
+          align_corners: false

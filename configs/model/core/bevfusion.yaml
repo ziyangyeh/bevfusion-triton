@@ -1,0 +1,8 @@
+# @package _global_
+defaults:
+  - _self_
+
+model:
+  image_size: ${image_size}
+  point_cloud_range: ${point_cloud_range}
+  voxel_size: ${voxel_size}

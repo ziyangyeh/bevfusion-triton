@@ -1,0 +1,11 @@
+# @package _global_
+defaults:
+  - _self_
+
+model:
+  encoders:
+    lidar:
+      voxelize:
+        max_num_points: 10
+        point_cloud_range: ${point_cloud_range}
+        voxel_size: ${voxel_size}

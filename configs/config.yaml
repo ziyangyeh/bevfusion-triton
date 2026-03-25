@@ -1,0 +1,5 @@
+defaults:
+  - "experiment/det": swint_v0p075
+  - _self_
+
+ckpt_path: null

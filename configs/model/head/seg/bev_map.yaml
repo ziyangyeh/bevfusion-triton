@@ -1,0 +1,14 @@
+# @package _global_
+defaults:
+  - _self_
+
+model:
+  heads:
+    object: null
+    map:
+      in_channels: 512
+      grid_transform:
+        input_scope: [[-51.2, 51.2, 0.8], [-51.2, 51.2, 0.8]]
+        output_scope: [[-50.0, 50.0, 0.5], [-50.0, 50.0, 0.5]]
+      classes: ${map_classes}
+      loss: focal

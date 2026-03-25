@@ -1,0 +1,32 @@
+# @package _global_
+defaults:
+  - /dataset/nuscenes: det
+  - /dataset/nuscenes/pipeline: det
+  - /dataset/nuscenes/dataloader: det
+  - /runtime: det
+  - /optimizer: det
+  - /model/core: bevfusion
+  - /model/encoder/camera/backbone: swin_tiny
+  - /model/encoder/camera/neck: generalized_lss_fpn
+  - /model/encoder/camera/vtransform: depth_lss
+  - /model/encoder/lidar/voxelize: default
+  - /model/encoder/lidar/backbone: sparse_encoder
+  - /model/fuser/conv: default
+  - /model/decoder/backbone: second
+  - /model/decoder/neck: second_fpn
+  - /model/head/det: transfusion
+  - _self_
+
+load_from: pretrained/bevfusion-det.pth
+
+model:
+  encoders:
+    camera:
+      vtransform:
+        xbound: [-54.0, 54.0, 0.3]
+        ybound: [-54.0, 54.0, 0.3]
+    lidar:
+      voxelize:
+        max_voxels: [120000, 160000]
+      backbone:
+        sparse_shape: [1440, 1440, 41]
