@@ -1,10 +1,17 @@
 from __future__ import annotations
 
 import atexit
+import os
 import pickle
 import signal
 from pathlib import Path
 from typing import Any
+
+# Open3D's Wayland support is broken in the CUDA build (GLEW init failure,
+# XSendEvent crash). Force X11/XWayland when running in a Wayland session.
+if os.environ.get('XDG_SESSION_TYPE') == 'wayland':
+    os.environ['XDG_SESSION_TYPE'] = 'x11'
+    os.environ['GDK_BACKEND'] = 'x11'
 
 import numpy as np
 import open3d as o3d
@@ -1137,7 +1144,7 @@ def _render_o3d_detection_image(
 ) -> np.ndarray:
 	renderer = o3d.visualization.rendering.OffscreenRenderer(int(width), int(height))
 	scene = renderer.scene
-	scene.set_background(np.asarray([5, 7, 11, 255], dtype=np.uint8))
+	scene.set_background(np.asarray([0, 0, 0, 255], dtype=np.uint8))
 
 	point_material = o3d.visualization.rendering.MaterialRecord()
 	point_material.shader = 'defaultUnlit'
@@ -1157,7 +1164,7 @@ def _render_o3d_detection_image(
 	center = np.asarray([0.0, 0.0, 0.0], dtype=np.float32)
 	extent = float(np.max(bounds[1] - bounds[0]))
 	eye = np.asarray([0.0, 0.0, max(extent * 1.5, 60.0)], dtype=np.float32)
-	up = np.asarray([1.0, 0.0, 0.0], dtype=np.float32)
+	up = np.asarray([0.0, 1.0, 0.0], dtype=np.float32)
 	renderer.setup_camera(60.0, center, eye, up)
 	image = np.asarray(renderer.render_to_image())
 	scene.clear_geometry()
@@ -1192,11 +1199,11 @@ def _show_o3d_detection_window(
 		center = bounds.mean(axis=0)
 		extent = float(np.max(bounds[1] - bounds[0]))
 		eye = center + np.asarray([0.0, 0.0, max(extent * 1.5, 60.0)], dtype=np.float64)
-		up = np.asarray([1.0, 0.0, 0.0], dtype=np.float64)
+		up = np.asarray([0.0, 1.0, 0.0], dtype=np.float64)
 
 		view_control = vis.get_view_control()
 		view_control.set_lookat(center.astype(np.float64))
-		view_control.set_front((center - eye).astype(np.float64))
+		view_control.set_front((eye - center).astype(np.float64))
 		view_control.set_up(up)
 		view_control.set_zoom(0.35)
 
